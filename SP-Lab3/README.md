@@ -1,2 +1,2 @@
-# SP-Lab1 
-SP-Lab1 MyBook application
+# SP-Lab3 
+SP-Lab3 MyBook application
