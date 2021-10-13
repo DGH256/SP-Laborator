@@ -1,13 +1,10 @@
 package com.company;
 
-public class Table implements Element {
-    private String name;
+import java.util.ArrayList;
 
-    public Table(String name) {
-        this.name=name;
-    }
-
-    public void print() {
-        System.out.println("Table :"+name);
+public class Table extends Element //Everything is an element now!
+{
+    public Table(String title) {
+       this.setTitle(title);
     }
 }

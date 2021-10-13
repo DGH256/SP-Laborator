@@ -1,15 +1,11 @@
 package com.company;
 
-public class Image implements  Element {
-    private String imageName;
+import java.util.ArrayList;
 
-    public Image(String imageName)
+public class Image extends  Element //Everything is an element now!
+{
+    public Image(String title)
     {
-        this.imageName=imageName;
-    }
-
-    public void print()
-    {
-        System.out.println("Image :"+imageName);
+        this.setTitle(title);
     }
 }

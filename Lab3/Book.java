@@ -1,59 +1,51 @@
 package com.company;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Book {
-
-    private String name;
+public class Book extends Element{
 
     private ArrayList<Author> authors = new ArrayList<>();
 
-    private ArrayList<Chapter> chapters = new ArrayList<>();
-
-    private TableOfContents toc;
-
-    Book(String bookname) {
-        this.name=bookname;
+    public Book(String title) {
+        this.setTitle(title);
     }
 
-
-
-    public int addChapter(String chapter){
-        this.chapters.add(new Chapter(chapter));
-
-        return this.chapters.size()-1;
-    }
-
-    public Chapter getChapterByIndex(int index)
+    public void addContent(Element element)
     {
-        if(index<this.chapters.size())
-        {
-            return this.chapters.get(index);
-        }
-        else
-        {
-            return null;
-        }
+        this.add(element);
     }
 
-    public void addAuthor(Author author){
+    public void addAuthor(Author author)
+    {
         this.authors.add(author);
     }
 
+    public void print()
+    {
+        super.print();
 
-    public void print() {
-        System.out.println("Book name: "+name);
-
-       for(Author author : this.authors)
-       {
-           author.print();
-       }
-
-        for(Chapter chapter:chapters)
-        {
-            chapter.print();
-        }
     }
+
+    //This is where we "overload" the print function and add the author names;
+    public String printExtraInfo()
+    {
+        String displayString = " and Authors: ";
+
+        for(int i=0;i<authors.size();i++)
+        {
+            displayString+=authors.get(i).getName();
+
+            if(i< authors.size()-1)
+            {
+                displayString+=", ";
+            }
+        }
+
+        return displayString;
+    }
+
+
 
 }

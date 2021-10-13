@@ -1,13 +1,11 @@
 package com.company;
 
-public class Paragraph implements Element {
-    private String name;
+import java.util.ArrayList;
 
-    public Paragraph(String name) {
-    this.name=name;
-    }
-
-    public void print() {
-        System.out.println("Paragraph :"+name);
+public class Paragraph extends Element //Everything is an element now!
+{
+    public Paragraph(String title)
+    {
+        this.setTitle(title);
     }
 }
