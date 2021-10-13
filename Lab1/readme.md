@@ -1,1 +1,1 @@
-readme lab 3
+Readme Laborator 3
