@@ -2,38 +2,34 @@ package com.company;
 
 public class Main {
 
-        public static void main (String[]args){
-            Book noapteBuna = new Book("Noapte buna, copii!");
-            Author rpGheo = new Author("Radu Pavel Gheo");
+    public static void main(String[] args) throws Exception {
+        Book noapteBuna = new Book("Noapte buna, copii!");
 
-            noapteBuna.addAuthor(rpGheo);
+        Author rpGheo = new Author("Radu Pavel Gheo");
+        noapteBuna.addContent(new Paragraph("Multumesc celor care ..."));
+        noapteBuna.addAuthor(rpGheo);
 
-            Section cap1 = new Section("Capitolul 1");
-            Section cap11 = new Section("Capitolul 1.1");
-            Section cap111 = new Section("Capitolul 1.1.1");
-            Section cap1111 = new Section("Subchapter 1.1.1.1");
-            noapteBuna.addContent(new Paragraph("Multumesc celor care ..."));
-            noapteBuna.addContent(cap1);
-            cap1.add(new Paragraph("Moto capitol"));
-            cap1.add(cap11);
-            cap11.add(new Paragraph("Text from subchapter 1.1"));
+        Section cap1 = new Section("Capitolul 1");
+        Section cap11 = new Section("Capitolul 1.1");
+        Section cap111 = new Section("Capitolul 1.1.1");
+        Section cap1111 = new Section("Subchapter 1.1.1.1");
+        cap1.add(new Paragraph("Moto capitol"));
+        cap11.add(new Paragraph("Text from subchapter 1.1"));
+        cap111.add(new Paragraph("Text from subchapter 1.1.1"));
 
-            cap11.add(cap111);
-            cap111.add(new Paragraph("Text from subchapter 1.1.1"));
-            cap111.add(cap1111);
-            cap1111.add(new Image("Image subchapter 1.1.1.1"));
+        cap111.add(cap1111);
+        cap11.add(cap111);
+        cap1.add(cap11);
+        noapteBuna.addContent(cap1);
 
-            //Uncomment any of the lines below and it will throw the correct UnsuportedOperationException because the book already contains that element;
+        //Checking if it stays 'Capitolul 1.1.1' in the book
+        cap111=new Section("Capitol 2.2.2");
 
-            //noapteBuna.addContent(new Image("Image subchapter 1.1.1.1"));
-            //cap11.add(cap111);
-            //cap1111.add(new Paragraph("Moto capitol"));
+        noapteBuna.print();
 
-
-            noapteBuna.print();
-
-
-
-        }
+        cap111.print();
+        //It stayed 'Capitolul 1.1.1' in the book, proving that the cloning was successful
+        //Outside the book it now is 'Capitolul 2.2.2'
+    }
     }
 

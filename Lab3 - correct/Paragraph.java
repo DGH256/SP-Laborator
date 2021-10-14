@@ -1,11 +1,38 @@
 package com.company;
 
-import java.util.ArrayList;
+public class Paragraph implements Element {
+    private String text;
 
-public class Paragraph extends Element //Everything is an element now!
-{
-    public Paragraph(String title)
-    {
-        this.setTitle(title);
+    public Paragraph(String text) {
+        this.text = text;
+    }
+
+    public void print() {
+        System.out.println(this.text);
+    }
+
+    @Override
+    public void add(Element element) {
+        //not needed
+    }
+
+    @Override
+    public void remove(Element element) {
+        //not needed
+    }
+
+    @Override
+    public boolean find(Element element) {
+        if (!(element instanceof Paragraph))
+            return false;
+        else {
+            return ((Paragraph) element).text.equals(this.text);
+        }
+    }
+
+    @Override
+    public Element clone() {
+        Paragraph newparagraph = new Paragraph(this.text);
+        return newparagraph;
     }
 }
