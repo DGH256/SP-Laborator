@@ -1,4 +1,4 @@
-Feedback primit pentru prima tema (https://github.com/DorinGalben/SP-Laborator/tree/main/Lab5%20-%20homework) :
+Feedback primit la prima tema (https://github.com/DorinGalben/SP-Laborator/tree/main/Lab5%20-%20homework) :
 1) Image.print nu e ce trebuie. Are responsabilitiati multiple: a) incarca imaginea din fisier, b)  creaza un icon, c) creaza contextul de randar (JPanel-ul). Responsaibilitatea ei ar trebui sa redea o imagine intr-un context de randare pe care il primeste 'de la client' (adica apelant). Incarcarea imaginii din fiser ar trebui facuta in clasele ce implementeaza ImageLoader (BMPImageLoader, JPGImageLoader etc) chiar daca pentru anumite tipuri de fisiere implementarea va fi aceeasi ImageIO.read(...). In constructorul clasei Image ar trebui incarcat continutul imaginii, adica  this.imageContent = imageFactory.create(url).content()
 2) De ce ai nevoie de metoda clone()?
 3) Image.add cu un body empty si un comment // not needed , arata ca ceva ce ar putea fi imbunatatit la cursul de sabloane de proiectare
