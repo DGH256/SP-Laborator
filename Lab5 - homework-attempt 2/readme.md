@@ -9,12 +9,14 @@ Schimbari facute la aceasta tema :
 
 2) Am sters metoda clone() din interfata Element si alte clase. Ea ramasese din laboratorul 3, cerinta 11 unde trebuia sa adaugam o clona a elementului cu metoda add().
 5) Nu am mai pus fisierele .iml pe git.
-3) Image.add cu un body empty -- intr-adevar este o greseala. M-am uitat din nou peste diagrama laboratorului si am vazut ca Image nu trebuie sa implementeze Element, numai ImageProxy trebuie.
-Image nu mai implementeaza Element acum dar ImageProxy tot trebuie sa implementeze iar ImageProxy va avea in continuare metodele add(), remove(), find() cu body empty.
+3) Image.add cu un body empty -- intr-adevar este o greseala. M-am uitat din nou peste diagrama laboratorului si am vazut ca Image nu trebuie sa implementeze Element, numai ImageProxy trebuie. Image nu mai implementeaza Element acum dar ImageProxy tot trebuie sa implementeze iar ImageProxy va avea in continuare metodele add(), remove(), find() cu body empty.
 4) AlignStrategy am implementat acum. Am pus Context drept lungimea String-ului ce trebuie afisat de AlignStrategy, cu offset in functie de tipul alininierii.
 Exemplu : AlignLeft: Paragraph1----, AlignCenter: --Paragraph1--, AlignRight: ----Paragraph1. In interiorul paragraph este apelat "strategy.render(this,new Context(100));".
 1) -Am mutat incarcarea imaginilor din fisier in BMPImageLoader, PNGImageLoader, JPGImageLoader. O problema este ca "ImageIO.read" poate arunca "IOException" deci acum am foarte multe metode cu "throws IOException";
    -In constructorul clasei Image este incarcat acum continutul imaginii, this.imageLoader = imageFactory.create(url);
    -In clasa Image am acum 2 metode print, o metoda print(PrintStream) -- unde primeste 'de la client' un Printstream si afiseaza numele+dimensiunea imagini.
     O alta  metoda print(Jpanel panel, JLabel label, JFrame frame) -- unde primeste 'de la client' elementele JPanel,label,frame unde este redata imaginea. In interiorul ImageProxy sunt creeate un JPanel,JLabel,Jframe iar apoi ele sunt predate metodei 'print' a Imaginii. 
-   Cred ca in continuare este gresit pentru ca in interiorul metodei print(JPanel,JLabel,JFrame) apelam new JLabel(), new JFrame(), new new JPanel() dar sunt nevoie sa le apelez pentru a desena imaginea imaginea deci nu stiu sigur cum sa rezolv corect cerinta.
+   Cred ca si aceasta implementare este gresita pentru ca in interiorul metodei print(JPanel,JLabel,JFrame) apelam new JLabel(), new JFrame(), new new JPanel() dar sunt nevoie sa le apelez pentru a desena imaginea imaginea deci nu stiu sigur cum sa rezolv corect cerinta.
+   
+   
+ ![Screenshot_5780](https://user-images.githubusercontent.com/91731551/140642785-ad0f8122-2f36-4b26-b2c0-0c94f8d262a6.png)
