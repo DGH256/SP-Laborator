@@ -14,9 +14,8 @@ Schimbari facute la aceasta tema :
 Exemplu : AlignLeft: Paragraph1----, AlignCenter: --Paragraph1--, AlignRight: ----Paragraph1. In interiorul paragraph este apelat "strategy.render(this,new Context(100));".
 - 1). -Am mutat incarcarea imaginilor din fisier in BMPImageLoader, PNGImageLoader, JPGImageLoader. O problema este ca "ImageIO.read" poate arunca "IOException" deci acum am foarte multe metode cu "throws IOException";
    <br/>-In constructorul clasei Image este incarcat acum continutul imaginii, this.imageLoader = imageFactory.create(url);
-   -In clasa Image am acum 2 metode print, o metoda print(PrintStream) -- unde primeste 'de la client' un Printstream si afiseaza numele+dimensiunea imagini.
-    O alta  metoda print(Jpanel panel, JLabel label, JFrame frame) -- unde primeste 'de la client' elementele JPanel,label,frame unde este redata imaginea. In interiorul ImageProxy sunt creeate un JPanel,JLabel,Jframe iar apoi ele sunt predate metodei 'print' a Imaginii. 
-   Cred ca si aceasta implementare este gresita pentru ca in interiorul metodei print(JPanel,JLabel,JFrame) apelam new JLabel(), new JFrame(), new new JPanel() dar sunt nevoie sa le apelez pentru a desena imaginea imaginea deci nu stiu sigur cum sa rezolv corect cerinta.
+   <br/>-In clasa Image am acum 2 metode print, o metoda print(PrintStream) -- unde primeste 'de la client' un Printstream si afiseaza numele+dimensiunea imagini.A doua metoda print(Jpanel panel, JLabel label, JFrame frame) -- unde primeste 'de la client' elementele JPanel,label,frame unde este redata imaginea. In interiorul ImageProxy sunt creeate un JPanel,JLabel,Jframe iar apoi ele sunt predate metodei 'print' a Imaginii. 
+   <br/>Cred ca si aceasta implementare este gresita pentru ca in interiorul metodei print(JPanel,JLabel,JFrame) apelam new JLabel(), new JFrame(), new new JPanel() dar sunt nevoie sa le apelez pentru a desena imaginea imaginea deci nu stiu sigur cum sa rezolv corect cerinta.
    
    
  ![Screenshot_5780](https://user-images.githubusercontent.com/91731551/140642785-ad0f8122-2f36-4b26-b2c0-0c94f8d262a6.png)
