@@ -1,0 +1,27 @@
+table td
+{
+min-width:100px;
+padding-bottom:10px;
+border:1px solid black;
+text-align:center;
+}
+
+table tr
+{
+border:1px solid black;
+text-align:center;
+}
+
+input
+{
+max-width:130px;
+}
+.btn-info
+{
+margin-left:10px;
+}
+
+.hidden
+{
+display:none !important;
+}
