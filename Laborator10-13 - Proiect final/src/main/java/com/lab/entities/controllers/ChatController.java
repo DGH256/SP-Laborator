@@ -23,6 +23,7 @@ public class ChatController {
 
     private final ChatMessageService service;
     private final int maxMessagesReturned = 10;
+    private final int maxActiveEmitters = 5;
     ArrayList<SseEmitter> emitterList = new ArrayList<>() ;
 
     public ChatController(ChatMessageService service) {
@@ -50,10 +51,20 @@ public class ChatController {
         //Keeping the SSeEmitter open forever
         SseEmitter chatEmitter = new SseEmitter(18000000L);
 
+        if(emitterList.size()>maxActiveEmitters)
+        {
+            //I noticed that, if I have more than 7+ active emitters at one time the application crashes
+            //So I'm doing this trick to limit the number of active emitters
+
+            emitterList.get(0).complete();
+            emitterList.remove(0);
+        }
+
         emitterList.add(chatEmitter);
 
         List<ChatMessage> allMessages = service.getAll();
 
+        //Only returning the latest {maxMessagesReturned} messages
         allMessages=allMessages.subList(allMessages.size()-maxMessagesReturned, allMessages.size());
 
         broadcastToEmitter(allMessages, chatEmitter);
