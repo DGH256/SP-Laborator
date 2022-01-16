@@ -1,4 +1,4 @@
-// A $( document ).ready() block.
+
 var base_url="http://localhost:8080"
 
 $( document ).ready(function() {
@@ -11,7 +11,98 @@ get_teachers_list();
 get_courses_list();
 get_students_list();
 init_event_hooks();
+//init_sse_emitter();
+init_sse_emitter_2();
+//init_sse_emitter_3();
+}
 
+function init_sse_emitter_2()
+{
+  var chat_container = $(".emitterContainer2");
+  var template='<b>Sender:{0} </b> | <b>Message:{1} </b> <br/>';
+  var default_sender="anonymous", sender="";
+  var emitterUrl = base_url+"/chat/sse_getAll";
+
+  const eventSource = new EventSource(emitterUrl); 
+
+  eventSource.onmessage = event => {
+    const msg = JSON.parse(event.data);
+
+    //console.log("Event: "+event.data);
+    //console.log(event.data);
+    var chatMessages = $.parseJSON(event.data);
+
+    if(Array.isArray(chatMessages))
+    {
+    $.each(chatMessages, function(n,elem){
+
+      sender = elem.sender;
+      //Checking if sender is null or empty string
+      if(sender==null || !sender.trim()) { sender=default_sender};
+
+      chat_container.append(template.format(sender, elem.content));
+
+      });
+    }
+    else
+    {
+      sender = chatMessages.sender;
+      //Checking if sender is null or empty string
+      if(sender==null || !sender.trim()) { sender=default_sender};
+
+      chat_container.append(template.format(sender, chatMessages.content));
+    }
+  };
+
+}
+
+function init_sse_emitter_3()
+{
+ var chat_container = $(".emitterContainer2");
+ const Http = new XMLHttpRequest();
+ const emitterUrl = base_url+"/chat/sse_getAll";
+
+  Http.open("GET", emitterUrl);
+  Http.send();
+
+   Http.onreadystatechange = (e) => {
+       var response_text = Http.response;
+       response_text=response_text.replace("data:","").trim();
+
+       console.log(response_text);
+       var response = $.parseJSON(response_text);
+       chat_container.append(response);
+    }
+}
+
+
+function init_sse_emitter()
+{
+  var chat_container = $(".emitterContainer");
+  var emitterUrl = base_url+"/chat/sse_getAll";
+
+  var sse = $.SSE(emitterUrl, {
+      onMessage: function(message) {
+
+        var template='<b>Sender:{0} </b> | <b>Message:{1} </b> <br/>';
+  
+        var default_sender="anonymous", sender="";
+
+        var chatMessages = $.parseJSON(message.data);
+
+          $.each(chatMessages, function(n,elem){
+
+            sender = elem.sender;
+            //Checking if sender is null or empty string
+            if(sender==null || !sender.trim()) { sender=default_sender};
+
+            chat_container.append(template.format(sender, elem.content));
+
+            });
+      }
+  });
+
+  sse.start();
 }
 
 function get_teachers_list()
@@ -78,10 +169,8 @@ var title = $(".add-teacher-title").val();
         dataType: 'json'
     });
 
-setTimeout(function() {
-    location.reload();
-}, 300);
-});
+setTimeout(function() {location.reload();}, 300);});
+
 
 $(".btn-add-course").click(function(){
 
@@ -154,6 +243,24 @@ var url = base_url+"/student/"+id_student+"/addCourse/"+id_course;
 
 $.get(url);
 
+});
+
+$(".btn-add-chatMsg").click(function(){
+
+  var sender = $(".add-chatMsg-sender").val();
+  var message = $(".add-chatMsg-message").val();
+
+   $.ajax({
+          url: base_url+'/chat/save',
+          type: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify({
+              sender:sender,
+              content:message
+          }),
+          dataType: 'json'
+      });
+  
 });
 
 

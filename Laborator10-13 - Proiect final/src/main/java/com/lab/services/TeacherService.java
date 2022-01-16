@@ -46,7 +46,6 @@ public class TeacherService {
 
     public void deleteItem(Long id)
     {
-
         repository.deleteById(id);
     }
 }

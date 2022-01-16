@@ -10,13 +10,13 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+//@CrossOrigin
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "courses"})
 @Entity
-@Data
+@Table(name = "teacher")
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "teacher")
-@CrossOrigin
-//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "courses"})
+@Data
 public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,7 +29,8 @@ public class Teacher {
     private String post;
 
     //@ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER)
-    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    //@ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinTable(name = "teacher_course", joinColumns = @JoinColumn(name = "teacher_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
     //@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@course_id")
     //@JsonManagedReference
