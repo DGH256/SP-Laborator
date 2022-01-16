@@ -34,31 +34,6 @@ public class BookController {
         return service.getAll();
     }
 
-    SseEmitter bookEmitter;
-
-    @GetMapping("/test-emitter")
-    public SseEmitter fetchData2()
-    {
-        bookEmitter = new SseEmitter();
-        try {
-            bookEmitter.send("Hello world!", MediaType.TEXT_PLAIN);
-        }
-         catch (IOException ex) {}
-
-        return bookEmitter;
-    }
-
-    @GetMapping("/test-emitter-stuff")
-    public void emitter_stuff()
-    {
-        String str="hiiiii";
-
-        try {
-            bookEmitter.send(str, MediaType.TEXT_PLAIN);
-        }
-        catch (IOException ex) {}
-    }
-
     @GetMapping("/delete/{id}")
     public ResponseEntity deleteItem(@PathVariable Long id) {
         service.deleteItem(id);

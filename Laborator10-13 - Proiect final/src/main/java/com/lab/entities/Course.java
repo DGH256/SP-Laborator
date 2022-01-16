@@ -25,6 +25,16 @@ public class Course {
     private int credits;
     private int year;
 
+
+    @PreRemove
+    public void removeTrick()
+    {
+        // Using this so the students&teachers associated to this course
+        // DON'T get deleted when we delete the course
+        this.students.clear();
+        this.teachers.clear();
+    }
+
     //@ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @ManyToMany(cascade = {CascadeType.REMOVE}, fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)

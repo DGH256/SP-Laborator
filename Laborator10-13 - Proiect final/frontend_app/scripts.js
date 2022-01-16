@@ -11,8 +11,10 @@ get_teachers_list();
 get_courses_list();
 get_students_list();
 init_event_hooks();
-//init_sse_emitter();
+
 init_sse_emitter_2();
+
+//init_sse_emitter();
 //init_sse_emitter_3();
 }
 
