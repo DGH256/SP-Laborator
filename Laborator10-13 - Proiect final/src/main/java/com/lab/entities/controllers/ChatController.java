@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 @RestController
 @RequestMapping("/chat")
@@ -53,8 +54,8 @@ public class ChatController {
 
         if(emitterList.size()>maxActiveEmitters)
         {
-            //I noticed that, if I have more than 7+ active emitters at one time the application crashes
-            //So I'm doing this trick to limit the number of active emitters
+            //If there are more than 6 active emitters at one time the application crashes, so I'm doing this trick to limit the number of active emitters
+            //https://grapeup.com/blog/how-to-build-real-time-notification-service-using-server-sent-events-sse/
 
             emitterList.get(0).complete();
             emitterList.remove(0);
