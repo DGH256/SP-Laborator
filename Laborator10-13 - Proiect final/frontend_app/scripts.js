@@ -31,16 +31,14 @@ function init_sse_emitter_2()
     const msg = JSON.parse(event.data);
 
     //console.log("Event: "+event.data);
-    //console.log(event.data);
-    var chatMessages = $.parseJSON(event.data);
 
-    if(Array.isArray(chatMessages))
+    var sseResponse = $.parseJSON(event.data);
+
+    if(Array.isArray(sseResponse))
     {
-    $.each(chatMessages, function(n,elem){
+    $.each(sseResponse, function(n,elem){
 
-      sender = elem.sender;
-      //Checking if sender is null or empty string
-      if(sender==null || !sender.trim()) { sender=default_sender};
+      sender = format_senderName(elem.sender);
 
       chat_container.append(template.format(sender, elem.content));
 
@@ -48,64 +46,25 @@ function init_sse_emitter_2()
     }
     else
     {
-      sender = chatMessages.sender;
-      //Checking if sender is null or empty string
-      if(sender==null || !sender.trim()) { sender=default_sender};
+      sender = format_senderName(sseResponse.sender);
 
-      chat_container.append(template.format(sender, chatMessages.content));
+      chat_container.append(template.format(sender, sseResponse.content));
     }
   };
 
 }
 
-function init_sse_emitter_3()
+function format_senderName(sender)
 {
- var chat_container = $(".emitterContainer2");
- const Http = new XMLHttpRequest();
- const emitterUrl = base_url+"/chat/sse_getAll";
+  var default_sender="anonymous";
 
-  Http.open("GET", emitterUrl);
-  Http.send();
-
-   Http.onreadystatechange = (e) => {
-       var response_text = Http.response;
-       response_text=response_text.replace("data:","").trim();
-
-       console.log(response_text);
-       var response = $.parseJSON(response_text);
-       chat_container.append(response);
-    }
+  //Checking if sender is null or empty string
+  if(sender==null || !sender.trim()) 
+  { return default_sender;}
+  else
+  { return sender;}
 }
 
-
-function init_sse_emitter()
-{
-  var chat_container = $(".emitterContainer");
-  var emitterUrl = base_url+"/chat/sse_getAll";
-
-  var sse = $.SSE(emitterUrl, {
-      onMessage: function(message) {
-
-        var template='<b>Sender:{0} </b> | <b>Message:{1} </b> <br/>';
-  
-        var default_sender="anonymous", sender="";
-
-        var chatMessages = $.parseJSON(message.data);
-
-          $.each(chatMessages, function(n,elem){
-
-            sender = elem.sender;
-            //Checking if sender is null or empty string
-            if(sender==null || !sender.trim()) { sender=default_sender};
-
-            chat_container.append(template.format(sender, elem.content));
-
-            });
-      }
-  });
-
-  sse.start();
-}
 
 function get_teachers_list()
 {
@@ -147,7 +106,7 @@ $.get( base_url+"/student/getAll", function( data ) {
 
 }, "json" );
 
-setTimeout(add_event_hooks,500);
+setTimeout(add_event_hooks,300);
 }
 
 
@@ -192,11 +151,7 @@ var year = $(".add-course-year").val();
         dataType: 'json'
     });
 
-setTimeout(function() {
-    location.reload();
-}, 300);
-
-});
+setTimeout(function() {location.reload();}, 300);});
 
 
 $(".btn-add-student").click(function(){
@@ -219,11 +174,7 @@ var year = $(".add-student-year").val();
         dataType: 'json'
     });
 
-setTimeout(function() {
-    location.reload();
-}, 300);
-
-});
+setTimeout(function() {location.reload();}, 300);});
 
 $(".btn-enrol-teacher").click(function(){
 
@@ -264,11 +215,7 @@ $(".btn-add-chatMsg").click(function(){
       });
   
 });
-
-
 }
-
-
 
 function add_event_hooks()
 {
@@ -352,3 +299,56 @@ if (!String.prototype.format) {
     });
   };
 }
+
+
+/*
+
+function init_sse_emitter_3()
+{
+ var chat_container = $(".emitterContainer2");
+ const Http = new XMLHttpRequest();
+ const emitterUrl = base_url+"/chat/sse_getAll";
+
+  Http.open("GET", emitterUrl);
+  Http.send();
+
+   Http.onreadystatechange = (e) => {
+       var response_text = Http.response;
+       response_text=response_text.replace("data:","").trim();
+
+       console.log(response_text);
+       var response = $.parseJSON(response_text);
+       chat_container.append(response);
+    }
+}
+
+
+function init_sse_emitter()
+{
+  var chat_container = $(".emitterContainer");
+  var emitterUrl = base_url+"/chat/sse_getAll";
+
+  var sse = $.SSE(emitterUrl, {
+      onMessage: function(message) {
+
+        var template='<b>Sender:{0} </b> | <b>Message:{1} </b> <br/>';
+  
+        var default_sender="anonymous", sender="";
+
+        var sseResponse = $.parseJSON(message.data);
+
+          $.each(sseResponse, function(n,elem){
+
+            sender = elem.sender;
+            //Checking if sender is null or empty string
+            if(sender==null || !sender.trim()) { sender=default_sender};
+
+            chat_container.append(template.format(sender, elem.content));
+
+            });
+      }
+  });
+
+  sse.start();
+}
+*/
